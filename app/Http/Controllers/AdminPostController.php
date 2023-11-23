@@ -12,11 +12,7 @@ class AdminPostController extends Controller
     {
         return view('admin.posts.create');
     }
-    // public function index()
-    // {
-    //     $posts = Post::all();
-    //     return view('admin.posts.index', ['posts' => $posts]);
-    // }
+
     public function index()
     {
         $posts = Post::where('user_id', Auth::id())->get();
@@ -81,9 +77,9 @@ class AdminPostController extends Controller
 
     public function submitForReview(Post $post)
     {
-        // Check if the current user is an admin and the post status is 'pending'
+
         if (Auth::user()->isAdmin() && $post->status === 'pending') {
-            $post->status = 'pending_superadmin'; // Set status to 'pending_superadmin' for super-admin review
+            $post->status = 'pending_superadmin';
             $post->save();
 
             return redirect()->route('admin.posts.index')->with('success', 'Post submitted for super-admin review');

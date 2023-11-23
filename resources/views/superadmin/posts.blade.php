@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Submitted Posts for Super-Admin Review</h1>
+<h1 style='text-align: center; color: green;'>Welcome To SuperAdmin Page</h1>
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -21,10 +21,14 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th style="border: 1px solid black; padding: 8px; 
+            color: white; background-color: teal;">Title</th>
+                        <th style="border: 1px solid black; padding: 8px; 
+            color: white; background-color: teal;">Content</th>
+                        <th style="border: 1px solid black; padding: 8px; 
+            color: white; background-color: teal;">Status</th>
+                        <th style="border: 1px solid black; padding: 8px; 
+            color: white; background-color: teal;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,20 +38,24 @@
                         <td>{{ $post->content }}</td>
                         <td>{{ $post->status }}</td>
                         <td>
-                            <form
-                                action="{{ route('superadmin.posts.review', ['post' => $post->id, 'action' => 'approve']) }}"
-                                method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-success">Approve</button>
-                            </form>
-                            <form
-                                action="{{ route('superadmin.posts.review', ['post' => $post->id, 'action' => 'reject']) }}"
-                                method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-danger">Reject</button>
-                            </form>
+                            <div>
+
+
+                                <form
+                                    action="{{ route('superadmin.posts.review', ['post' => $post->id, 'action' => 'approve']) }}"
+                                    method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-success">Approve</button>
+                                </form>
+                                <form
+                                    action="{{ route('superadmin.posts.review', ['post' => $post->id, 'action' => 'reject']) }}"
+                                    method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

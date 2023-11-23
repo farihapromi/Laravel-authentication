@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Admin Posts</h1>
+<h1 style='text-align: center; color: green;'>Welcome To Admin Page</h1>
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -17,9 +17,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-8 offset-2">
-            <a href="{{ route('admin.posts.create') }}">Create New Post</a>
-        </div>
+
     </div>
 
     <div class="row">
@@ -68,6 +66,7 @@
 
 
 
+
                                 @endif
                             </td>
                         </tr>
@@ -77,5 +76,10 @@
             </div>
         </div>
     </div>
+</div>
+<div class="col-8 offset-2" style='text-align:center'>
+    <a href="{{ route('admin.posts.create') }}">
+        <button style="border-radius: 8px;" class='btn btn-success'>Create New
+            Post</button></a>
 </div>
 @endsection

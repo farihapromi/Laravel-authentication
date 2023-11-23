@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Create a New Post</h1>
+    <h1>Create New Post</h1>
 
     @if ($errors->any())
     <div class="alert alert-danger">

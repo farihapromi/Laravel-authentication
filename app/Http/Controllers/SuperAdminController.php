@@ -8,40 +8,7 @@ use Auth;
 
 class SuperAdminController extends Controller
 {
-    //
-    // public function reviewPost(Post $post)
-    // {
-    //     if (Auth::user()->isSuperAdmin()) {
-    //         // Fetch the post and check its status
-    //         $post = Post::findOrFail($post->id);
 
-    //         if ($post->status === 'pending_superadmin') {
-    //             // Approve the post
-    //             $post->status = 'approved';
-    //             $post->save();
-    //             return redirect()->route('superadmin.posts')->with('success', 'Post approved successfully');
-    //         } else {
-    //             // Reject the post or handle as needed
-    //             $post->status = 'rejected';
-    //             $post->save();
-    //             return redirect()->route('superadmin.posts')->with('error', 'Post rejected');
-    //         }
-    //     } else {
-    //         return redirect()->route('user.home')->with('error', 'You are not authorized as a super-admin');
-    //     }
-    // }
-
-    // public function showAdminPosts()
-    // {
-    //     $adminPosts = Post::where('status', 'pending_superadmin')->get();
-    //     return view('superadmin.posts', ['adminPosts' => $adminPosts]);
-    // }
-
-    // public function showApprovedPostsToUsers()
-    // {
-    //     $approvedPosts = Post::where('status', 'approved')->get();
-    //     return view('user.home', ['approvedPosts' => $approvedPosts]);
-    // }
 
 
     public function showSubmittedPosts()

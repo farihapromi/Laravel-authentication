@@ -43,12 +43,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('/admin/posts/{post}', [AdminPostController::class, 'update'])->name('admin.posts.update');
     Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
     Route::get('/admin/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
-    // Add a route for creating a post
+
 
     Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
-    // Add a route for storing a post
+
     Route::post('/admin/posts', [AdminPostController::class, 'store'])->name('admin.posts.store');
-    // Route::post('/admin/posts/{post}/review', [SuperAdminController::class, 'reviewPost'])->name('superadmin.posts.review');
+
     Route::post('/admin/posts/{post}/submit-for-review', [AdminPostController::class, 'submitForReview'])->name('admin.posts.submitForReview');
 });
 
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
 Route::middleware(['auth', 'user-access:superadmin'])->group(function () {
 
-    ;
+
 
     Route::get('/superadmin/posts', [SuperAdminController::class, 'showSubmittedPosts'])->name('superadmin.posts');
     Route::put('/superadmin/posts/{post}/{action}', [SuperAdminController::class, 'reviewPost'])
