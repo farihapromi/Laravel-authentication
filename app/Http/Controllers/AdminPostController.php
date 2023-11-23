@@ -12,9 +12,14 @@ class AdminPostController extends Controller
     {
         return view('admin.posts.create');
     }
+    // public function index()
+    // {
+    //     $posts = Post::all();
+    //     return view('admin.posts.index', ['posts' => $posts]);
+    // }
     public function index()
     {
-        $posts = Post::all(); // Fetch all posts. You might want to paginate them if there are many.
+        $posts = Post::where('user_id', Auth::id())->get();
         return view('admin.posts.index', ['posts' => $posts]);
     }
 
@@ -76,13 +81,21 @@ class AdminPostController extends Controller
 
     public function submitForReview(Post $post)
     {
-        if ($post->user_id === Auth::id()) {
-            $post->status = 'pending';
+        // Check if the current user is an admin and the post status is 'pending'
+        if (Auth::user()->isAdmin() && $post->status === 'pending') {
+            $post->status = 'pending_superadmin'; // Set status to 'pending_superadmin' for super-admin review
             $post->save();
 
-            return redirect()->route('admin.posts.index')->with('success', 'Post submitted for review');
+            return redirect()->route('admin.posts.index')->with('success', 'Post submitted for super-admin review');
         } else {
-            return redirect()->route('admin.posts.index')->with('error', 'Unauthorized action');
+            return redirect()->route('admin.posts.index')->with('error', 'Unable to submit for super-admin review');
         }
     }
+
+    public function showApprovedPosts()
+    {
+        $approvedPosts = Post::where('status', 'approved')->get();
+        return view('user.home', ['approvedPosts' => $approvedPosts]);
+    }
+
 }

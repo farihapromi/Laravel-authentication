@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminPostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SuperAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,31 +16,27 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+
+
+Auth::routes();
 Route::get('/', function () {
     return view('authWelcome');
 });
 
-Auth::routes();
-
-
 //Normal Users Routes List
-Route::middleware(['auth', 'user-access:user'])->group(function () {
 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth', 'user-access:user'])->group(function () {
+    Route::get('/home', [AdminPostController::class, 'showApprovedPosts'])->name('user.home');
+    Route::get('/', function () {
+        return view('authWelcome');
+    });
 });
 
+
+
+
 //Admin Routes List
-// Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
-//     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
-//     // Route::get('/admin/posts/{post}/edit', 'AdminPostController@edit')->name('admin.posts.edit');
-//     // Route::put('/admin/posts/{post}', 'AdminPostController@update')->name('admin.posts.update');
-//     // Route::delete('/admin/posts/{post}', 'AdminPostController@destroy')->name('admin.posts.destroy');
-//     Route::get('/admin/posts', [AdminPostController::class, 'create'])->name('admin.posts.index');
-//     Route::post('/admin/posts', 'AdminPostController@store')->name('admin.posts.store');
-
-
-// });
 
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
@@ -51,11 +48,20 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
     // Add a route for storing a post
     Route::post('/admin/posts', [AdminPostController::class, 'store'])->name('admin.posts.store');
+    // Route::post('/admin/posts/{post}/review', [SuperAdminController::class, 'reviewPost'])->name('superadmin.posts.review');
+    Route::post('/admin/posts/{post}/submit-for-review', [AdminPostController::class, 'submitForReview'])->name('admin.posts.submitForReview');
 });
 
 
 //Super Admin Routes List
+
 Route::middleware(['auth', 'user-access:superadmin'])->group(function () {
 
-    Route::get('/superadmin/home', [HomeController::class, 'superAdmin'])->name('superadmin.home');
+    ;
+
+    Route::get('/superadmin/posts', [SuperAdminController::class, 'showSubmittedPosts'])->name('superadmin.posts');
+    Route::put('/superadmin/posts/{post}/{action}', [SuperAdminController::class, 'reviewPost'])
+        ->where(['action' => 'approve|reject'])
+        ->name('superadmin.posts.review');
+
 });
